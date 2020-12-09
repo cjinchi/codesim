@@ -68,16 +68,20 @@ public class CppCompare {
         List<Token> tokensB = filter(tokenize(codeB));
 
         // verbose log
+        CodeSim.verbosePrintln("---------------------------------");
         CodeSim.verbosePrintln("Tokens of file 1 after filtering:");
         for (Token token:tokensA){
             CodeSim.verbosePrint(token.getText()+" ");
         }
         CodeSim.verbosePrintln("");
+
+        CodeSim.verbosePrintln("---------------------------------");
         CodeSim.verbosePrintln("Tokens of file 2 after filtering:");
         for(Token token:tokensB){
             CodeSim.verbosePrint(token.getText()+" ");
         }
         CodeSim.verbosePrintln("");
+        CodeSim.verbosePrintln("---------------------------------");
 
         if (tokensA.size()<1 || tokensB.size()<1){
             System.err.println("Invalid code length.");

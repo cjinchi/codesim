@@ -1,0 +1,2 @@
+#!/bin/bash
+JMTRACE_PATH=./target/jmtrace-1.0-SNAPSHOT-jar-with-dependencies.jar

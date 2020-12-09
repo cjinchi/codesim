@@ -4,7 +4,6 @@ import antlr.CPP14Lexer;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,9 +67,21 @@ public class CppCompare {
         List<Token> tokensA = filter(tokenize(codeA));
         List<Token> tokensB = filter(tokenize(codeB));
 
+        // verbose log
+        CodeSim.verbosePrintln("Tokens of file 1 after filtering:");
+        for (Token token:tokensA){
+            CodeSim.verbosePrint(token.getText()+" ");
+        }
+        CodeSim.verbosePrintln("");
+        CodeSim.verbosePrintln("Tokens of file 2 after filtering:");
+        for(Token token:tokensB){
+            CodeSim.verbosePrint(token.getText()+" ");
+        }
+        CodeSim.verbosePrintln("");
+
         if (tokensA.size()<1 || tokensB.size()<1){
-            System.err.println("The code length is too small.");
-            System.exit(ErrorCode.CODE_LENGTH_TOO_SMALL.getValue());
+            System.err.println("Invalid code length.");
+            System.exit(ErrorCode.INVALID_CODE_LENGTH.getValue());
         }
 
         boolean[][] isEqual = new boolean[tokensA.size()][tokensB.size()];
@@ -81,6 +92,7 @@ public class CppCompare {
         }
 
         final int MIN_SEQUENCE_LENGTH = 10;
+        CodeSim.verbosePrintln("MIN_SEQUENCE_LENGTH is 10.");
 
         boolean[][] visited = new boolean[tokensA.size()][tokensB.size()];
         boolean[] coveredA = new boolean[tokensA.size()];
@@ -115,11 +127,10 @@ public class CppCompare {
                 coveredLengthB++;
             }
         }
+        CodeSim.verbosePrintln("Cover length of file 1 is "+coveredLengthA+"/"+tokensA.size());
+        CodeSim.verbosePrintln("Cover length of file 2 is "+coveredLengthB+"/"+tokensB.size());
 
         return 100 * Math.max((double) coveredLengthA / tokensA.size(), (double) coveredLengthB / tokensB.size());
     }
 
-    public static void main(String[] args) {
-
-    }
 }

@@ -1,12 +1,27 @@
 package com.chenjinchi.codesim;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class CodeSim {
+    private static boolean verbose = false;
+
+
+    public static void verbosePrintln(String content){
+        if (verbose){
+            System.out.println(content);
+        }
+    }
+
+    public static void verbosePrint(String content){
+        if (verbose){
+            System.out.print(content);
+        }
+    }
+
+
     public static void main(String[] args) {
         Config config = UserInterface.processArgs(args);
         if (config.isError()) {
@@ -17,6 +32,13 @@ public class CodeSim {
             UserInterface.printUsage();
             return;
         }
+        if(config.isVerbose()){
+            verbose = true;
+        }
+
+        verbosePrintln("Args analysed successfully.");
+        verbosePrintln("Start reading code from files.");
+
 
         String codeA = null, codeB = null;
         try {
@@ -27,78 +49,11 @@ public class CodeSim {
             System.exit(ErrorCode.FILE_NOT_FOUND.getValue());
         }
 
+        verbosePrintln("Reading files successfully.");
+        verbosePrintln("Start comparing.");
+
         System.out.println(CppCompare.compare(codeA, codeB));
 
 
-
-//                String codeA = "ListNode *mergeKLists(vector<ListNode *> &lists) {\n" +
-//                "    if(lists.empty()){\n" +
-//                "        return nullptr;\n" +
-//                "    }\n" +
-//                "    while(lists.size() > 1){\n" +
-//                "        lists.push_back(mergeTwoLists(lists[0], lists[1]));\n" +
-//                "        lists.erase(lists.begin());\n" +
-//                "        lists.erase(lists.begin());\n" +
-//                "    }\n" +
-//                "    return lists.front();\n" +
-//                "}\n" +
-//                "ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {\n" +
-//                "    if(l1 == nullptr){\n" +
-//                "        return l2;\n" +
-//                "    }\n" +
-//                "    if(l2 == nullptr){\n" +
-//                "        return l1;\n" +
-//                "    }\n" +
-//                "    if(l1->val <= l2->val){\n" +
-//                "        l1->next = mergeTwoLists(l1->next, l2);\n" +
-//                "        return l1;\n" +
-//                "    }\n" +
-//                "    else{\n" +
-//                "        l2->next = mergeTwoLists(l1, l2->next);\n" +
-//                "        return l2;\n" +
-//                "    }\n" +
-//                "}";
-//        String codeB = "class Solution {\n" +
-//                "public:\n" +
-//                "    ListNode *mergeTwoLists(ListNode* l1, ListNode* l2) {\n" +
-//                "        if (NULL == l1) return l2;\n" +
-//                "        else if (NULL == l2) return l1;\n" +
-//                "        if (l1->val <= l2->val) {\n" +
-//                "            l1->next = mergeTwoLists(l1->next, l2);\n" +
-//                "            return l1;\n" +
-//                "        }\n" +
-//                "        else {\n" +
-//                "            l2->next = mergeTwoLists(l1, l2->next);\n" +
-//                "            return l2;\n" +
-//                "        }\n" +
-//                "    }\n" +
-//                "    ListNode *mergeKLists(vector<ListNode *> &lists) {\n" +
-//                "        if (lists.empty()) return NULL;\n" +
-//                "        int len = lists.size();\n" +
-//                "        while (len > 1) {\n" +
-//                "            for (int i = 0; i < len / 2; ++i) {\n" +
-//                "                lists[i] = mergeTwoLists(lists[i], lists[len - 1 - i]);\n" +
-//                "            }\n" +
-//                "            len = (len + 1) / 2;\n" +
-//                "        }\n" +
-//                "        \n" +
-//                "        return lists.front();\n" +
-//                "    }\n" +
-//                "};";
-
-
-
-//        Set<Integer> delimiterTypes = new HashSet<>(Arrays.asList(83,124,84,3));
-//        List<Token> tokens = CppCompare.tokenize(codeA);
-//        for(Token token:tokens){
-//            System.out.print(token.getText());
-//            System.out.print(" ");
-//            if (delimiterTypes.contains(token.getType()) ){
-//                System.out.println();
-//            }
-//        }
-//        double score = CppCompare.compare(codeA,codeB);
-
-//       something related to user interface here
     }
 }

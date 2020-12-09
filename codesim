@@ -2,7 +2,7 @@
 CODESIM_PATH=./target/codesim-1.0-SNAPSHOT-jar-with-dependencies.jar
 if [ -e ${CODESIM_PATH} ]
 then
-    java -jar {CODESIM_PATH} $@
+    java -jar $ {CODESIM_PATH} $@
 else
     >&2 echo "${CODESIM_PATH}: file not found."
     >&2 echo "Please run 'mvn package' first or set correct path in file codesim."

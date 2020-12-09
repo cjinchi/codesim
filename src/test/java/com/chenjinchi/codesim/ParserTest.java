@@ -2,7 +2,6 @@ package com.chenjinchi.codesim;
 
 import antlr.CPP14Lexer;
 import antlr.CPP14Parser;
-import antlr.CPP14ParserVisitor;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -14,7 +13,7 @@ import java.nio.file.Paths;
 
 public class ParserTest {
     public static void main(String[] args) throws URISyntaxException, IOException {
-        String code = new String(Files.readAllBytes(Paths.get(ParserTest.class.getResource("/CppSourceFiles/2.cpp").toURI())), StandardCharsets.UTF_8);
+        String code = new String(Files.readAllBytes(Paths.get(ParserTest.class.getResource("/backup/2.cpp").toURI())), StandardCharsets.UTF_8);
         CPP14Lexer lexer = new CPP14Lexer(CharStreams.fromString(code));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CPP14Parser parser = new CPP14Parser(tokens);

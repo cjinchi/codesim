@@ -1,40 +1,30 @@
 package com.chenjinchi.codesim;
 
-import org.antlr.v4.runtime.Token;
-
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class CodeSim {
     public static void main(String[] args) {
         Config config = UserInterface.processArgs(args);
         if (config.isError()) {
             System.err.println(config.getErrorInfo());
-            System.exit(-1);
+            System.exit(ErrorCode.INVALID_CONFIG.getValue());
         }
         if (config.isHelp()) {
             UserInterface.printUsage();
             return;
         }
 
-
         String codeA = null, codeB = null;
         try {
             codeA = new String(Files.readAllBytes(Paths.get(config.getFiles().get(0))), StandardCharsets.UTF_8);
             codeB = new String(Files.readAllBytes(Paths.get(config.getFiles().get(1))), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-            System.exit(-2);
+            System.err.println(e.getMessage()+": file not found");
+            System.exit(ErrorCode.FILE_NOT_FOUND.getValue());
         }
 
         System.out.println(CppCompare.compare(codeA, codeB));

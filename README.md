@@ -72,7 +72,7 @@ codesim的主要步骤如下：
 
 #### 阴性数据集结果
 
-<img src="../../Documents/课程/backup/ISER/codesim_report.assets/image-20201209171138620.png" alt="image-20201209171138620" style="zoom:50%;" />
+<img src="README.assets/image-20201209171138620.png" alt="image-20201209171138620" style="zoom:50%;" />
 
 ### 讨论
 
